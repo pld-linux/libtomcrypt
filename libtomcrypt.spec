@@ -9,7 +9,7 @@ Source0:	http://libtom.org/files/crypt-%{version}.tar.bz2
 # Source0-md5:	cea7e5347979909f458fe7ebb5a44f85
 Patch0:		%{name}-link.patch
 URL:		http://libtom.org/?page=features&whatfile=crypt
-BuildRequires:	libtool
+BuildRequires:	libtool >= 2:1.5
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
