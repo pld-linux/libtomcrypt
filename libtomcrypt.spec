@@ -37,6 +37,7 @@ Summary:	Header files for LibTomCrypt library
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki LibTomCrypt
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
+%{?with_ltm:Requires:	libtommath-devel}
 
 %description devel
 Header files for LibTomCrypt library.
@@ -49,6 +50,7 @@ Summary:	Static LibTomCrypt library
 Summary(pl.UTF-8):	Statyczna biblioteka LibTomCrypt
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
+%{?with_ltm:Requires:	libtommath-static}
 
 %description static
 Static LibTomCrypt library.
