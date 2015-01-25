@@ -1,14 +1,19 @@
+#
+# Conditional build:
+%bcond_without	ltm		# use LibTomMath for Math provider
+
 Summary:	LibTomCrypt - fairly comprehensive, modular and portable cryptographic toolkit
 Summary(pl.UTF-8):	LibTomCrypt - dość obszerna, modularna i przenośna biblioteka kryptograficzna
 Name:		libtomcrypt
 Version:	1.17
-Release:	1
+Release:	1.1
 License:	Public Domain
 Group:		Libraries
 Source0:	http://libtom.org/files/crypt-%{version}.tar.bz2
 # Source0-md5:	cea7e5347979909f458fe7ebb5a44f85
 Patch0:		%{name}-link.patch
 URL:		https://github.com/libtom/libtomcrypt
+%{?with_ltm:BuildRequires:	libtommath-devel}
 BuildRequires:	libtool >= 2:1.5
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -55,7 +60,8 @@ Statyczna biblioteka LibTomCrypt.
 %patch0 -p1
 
 %build
-CFLAGS="%{rpmcflags}" \
+CFLAGS="%{rpmcflags} %{?with_ltm:-DLTC_NO_ASM -DUSE_LTM -DLTM_DESC}" \
+%{?with_ltm:EXTRALIBS=-ltommath} \
 %{__make} -f makefile.shared \
 	CC="libtool --mode=compile --tag=CC %{__cc}" \
 	CCLD="libtool --mode=link --tag=CC %{__cc}" \
