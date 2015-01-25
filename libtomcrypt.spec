@@ -12,6 +12,7 @@ Group:		Libraries
 Source0:	http://libtom.org/files/crypt-%{version}.tar.bz2
 # Source0-md5:	cea7e5347979909f458fe7ebb5a44f85
 Patch0:		%{name}-link.patch
+Patch1:		%{name}-makefile.patch
 URL:		https://github.com/libtom/libtomcrypt
 %{?with_ltm:BuildRequires:	libtommath-devel}
 BuildRequires:	libtool >= 2:1.5
@@ -58,6 +59,7 @@ Statyczna biblioteka LibTomCrypt.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 %build
 CFLAGS="%{rpmcflags} %{?with_ltm:-DLTC_NO_ASM -DUSE_LTM -DLTM_DESC}" \
