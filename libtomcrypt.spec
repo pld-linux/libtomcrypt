@@ -6,7 +6,7 @@ Summary:	LibTomCrypt - fairly comprehensive, modular and portable cryptographic 
 Summary(pl.UTF-8):	LibTomCrypt - dość obszerna, modularna i przenośna biblioteka kryptograficzna
 Name:		libtomcrypt
 Version:	1.17
-Release:	2
+Release:	3
 License:	Public Domain
 Group:		Libraries
 Source0:	http://libtom.org/files/crypt-%{version}.tar.bz2
