@@ -5,18 +5,20 @@
 Summary:	LibTomCrypt - fairly comprehensive, modular and portable cryptographic toolkit
 Summary(pl.UTF-8):	LibTomCrypt - dość obszerna, modularna i przenośna biblioteka kryptograficzna
 Name:		libtomcrypt
-Version:	1.17
-Release:	4
-License:	Public Domain
+Version:	1.18.1
+Release:	1
+License:	Public Domain or WTFPL v2
 Group:		Libraries
 #Source0Download: https://github.com/libtom/libtomcrypt/releases
-Source0:	https://github.com/libtom/libtomcrypt/releases/download/%{version}/crypt-%{version}.tar.bz2
-# Source0-md5:	cea7e5347979909f458fe7ebb5a44f85
-Patch0:		%{name}-link.patch
-Patch1:		%{name}-makefile.patch
-URL:		http://www.libtom.org/LibTomCrypt/
-%{?with_ltm:BuildRequires:	libtommath-devel}
+Source0:	https://github.com/libtom/libtomcrypt/releases/download/v%{version}/crypt-%{version}.tar.xz
+# Source0-md5:	81dcf5cda845ebce5d42446615deb563
+Patch0:		%{name}-pc.patch
+URL:		http://www.libtom.net/LibTomCrypt/
+%{?with_ltm:BuildRequires:	libtommath-devel >= 1.0.1}
 BuildRequires:	libtool >= 2:1.5
+%{?with_ltm:BuildRequires:	pkgconfig}
+BuildRequires:	tar >= 1:1.22
+BuildRequires:	xz
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -62,14 +64,13 @@ Statyczna biblioteka LibTomCrypt.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
 
 %build
-CFLAGS="%{rpmcflags} %{?with_ltm:-DLTC_NO_ASM -DUSE_LTM -DLTM_DESC}" \
-%{?with_ltm:EXTRALIBS=-ltommath} \
+# IGNORE_SPEED avoids overriding rpmcflags
+CFLAGS="%{rpmcflags} %{?with_ltm:-DUSE_LTM -DLTM_DESC}" \
 %{__make} -f makefile.shared \
-	CC="libtool --mode=compile --tag=CC %{__cc}" \
-	CCLD="libtool --mode=link --tag=CC %{__cc}" \
+	CC="%{__cc}" \
+	IGNORE_SPEED=1 \
 	LIBPATH=%{_libdir}
 
 %install
@@ -77,9 +78,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %{__make} -f makefile.shared install \
 	DESTDIR=$RPM_BUILD_ROOT \
-	LIBPATH=%{_libdir} \
-	GROUP=$(id -ng) \
-	USER=$(id -nu)
+	PREFIX=%{_prefix} \
+	LIBPATH=%{_libdir}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -89,22 +89,18 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc LICENSE TODO changes
+%doc LICENSE README.md changes
 %attr(755,root,root) %{_libdir}/libtomcrypt.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libtomcrypt.so.0
-%attr(755,root,root) %{_libdir}/libtomcrypt_prof.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libtomcrypt_prof.so.0
+%attr(755,root,root) %ghost %{_libdir}/libtomcrypt.so.1
 
 %files devel
 %defattr(644,root,root,755)
 %doc doc/crypt.pdf notes/*.txt
 %attr(755,root,root) %{_libdir}/libtomcrypt.so
-%attr(755,root,root) %{_libdir}/libtomcrypt_prof.so
 %{_libdir}/libtomcrypt.la
-%{_libdir}/libtomcrypt_prof.la
 %{_includedir}/tomcrypt*.h
+%{_pkgconfigdir}/libtomcrypt.pc
 
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/libtomcrypt.a
-%{_libdir}/libtomcrypt_prof.a

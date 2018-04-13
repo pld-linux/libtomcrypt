@@ -1,0 +1,11 @@
+--- libtomcrypt-1.18.1/makefile.shared.orig	2018-01-22 11:02:57.000000000 +0100
++++ libtomcrypt-1.18.1/makefile.shared	2018-04-13 19:26:45.534642643 +0200
+@@ -63,7 +63,7 @@
+ $(foreach demo, $(strip $(DEMOS)), $(eval $(call DEMO_template,$(demo))))
+ 
+ install: $(call print-help,install,Installs the library + headers + pkg-config file) .common_install
+-	sed -e 's,^prefix=.*,prefix=$(PREFIX),' -e 's,^Version:.*,Version: $(VERSION_PC),' libtomcrypt.pc.in > libtomcrypt.pc
++	sed -e 's,^prefix=.*,prefix=$(PREFIX),' -e 's,^libdir=.*,libdir=$(LIBPATH),' -e 's,^Version:.*,Version: $(VERSION_PC),' libtomcrypt.pc.in > libtomcrypt.pc
+ 	install -p -d $(DESTDIR)$(LIBPATH)/pkgconfig
+ 	install -p -m 644 libtomcrypt.pc $(DESTDIR)$(LIBPATH)/pkgconfig/
+ 
