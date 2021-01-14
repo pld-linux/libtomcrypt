@@ -5,13 +5,13 @@
 Summary:	LibTomCrypt - fairly comprehensive, modular and portable cryptographic toolkit
 Summary(pl.UTF-8):	LibTomCrypt - dość obszerna, modularna i przenośna biblioteka kryptograficzna
 Name:		libtomcrypt
-Version:	1.18.1
+Version:	1.18.2
 Release:	1
 License:	Public Domain or WTFPL v2
 Group:		Libraries
 #Source0Download: https://github.com/libtom/libtomcrypt/releases
 Source0:	https://github.com/libtom/libtomcrypt/releases/download/v%{version}/crypt-%{version}.tar.xz
-# Source0-md5:	81dcf5cda845ebce5d42446615deb563
+# Source0-md5:	e8d22351b7c95bef423c1cd02dcf836d
 Patch0:		%{name}-pc.patch
 URL:		http://www.libtom.net/LibTomCrypt/
 %{?with_ltm:BuildRequires:	libtommath-devel >= 1.0.1}
