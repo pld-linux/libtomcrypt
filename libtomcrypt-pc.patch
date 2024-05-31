@@ -9,3 +9,11 @@
  	install -p -d $(DESTDIR)$(LIBPATH)/pkgconfig
  	install -p -m 644 libtomcrypt.pc $(DESTDIR)$(LIBPATH)/pkgconfig/
  
+--- libtomcrypt-1.18.2/libtomcrypt.pc.in.orig	2018-07-01 22:49:01.000000000 +0200
++++ libtomcrypt-1.18.2/libtomcrypt.pc.in	2024-05-30 22:33:10.156938298 +0200
+@@ -7,4 +7,5 @@ Name: LibTomCrypt
+ Description: public domain open source cryptographic toolkit
+ Version: @to-be-replaced@
+ Libs: -L${libdir} -ltomcrypt
++Requires.private: libtommath
+ Cflags: -I${includedir}

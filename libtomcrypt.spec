@@ -6,7 +6,7 @@ Summary:	LibTomCrypt - fairly comprehensive, modular and portable cryptographic 
 Summary(pl.UTF-8):	LibTomCrypt - dość obszerna, modularna i przenośna biblioteka kryptograficzna
 Name:		libtomcrypt
 Version:	1.18.2
-Release:	2
+Release:	3
 License:	Public Domain or WTFPL v2
 Group:		Libraries
 #Source0Download: https://github.com/libtom/libtomcrypt/releases
@@ -81,6 +81,9 @@ rm -rf $RPM_BUILD_ROOT
 	PREFIX=%{_prefix} \
 	LIBPATH=%{_libdir}
 
+# obsoleted by pkg-config
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/libtomcrypt.la
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -97,7 +100,6 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc doc/crypt.pdf notes/*.txt
 %attr(755,root,root) %{_libdir}/libtomcrypt.so
-%{_libdir}/libtomcrypt.la
 %{_includedir}/tomcrypt*.h
 %{_pkgconfigdir}/libtomcrypt.pc
 
